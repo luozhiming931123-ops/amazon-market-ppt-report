@@ -1,0 +1,19 @@
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+*.log
+
+# Generated report artifacts
+*.pptx
+*.docx
+*.xlsx
+data/
+analysis/
+output/
+*_build/
+
+# Local/editor state
+.vscode/
+.idea/
+node_modules/

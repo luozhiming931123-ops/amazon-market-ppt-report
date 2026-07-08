@@ -1,0 +1,76 @@
+---
+name: amazon-market-ppt-report
+description: Use when creating or revising Amazon marketplace analysis PPTX reports from SellerSprite/SIF MCP data, especially for category entry, competitor, keyword, price-band, brand-share, review-risk, and annual business-target analysis.
+---
+
+# Amazon Market PPT Report
+
+## Overview
+
+Use this skill to turn Amazon US market research into a reusable, data-backed PPTX report. The report must preserve the full chain: data path, MCP calls, cleaning/filtering, analysis logic, visualization choices, PPTX style, export, and verification.
+
+## Trigger Fit
+
+Use for requests like:
+- "用 sellersprite-mcp 分析某个 Amazon 类目并生成 PPTX"
+- "补充市场竞争度、价格带、品牌市占、评价信息"
+- "把市场分析报告做成年度目标/业务规划输入"
+- "参考某个 PPT 风格，生成或重做市场报告"
+
+Do not use for quick one-paragraph market opinions without data collection.
+
+## Core Workflow
+
+1. **Clarify input only when blocking.** Default marketplace to `US`. Capture keyword(s), product/category, target brand, positioning, price posture, required output format, and any style reference PPTX.
+2. **Load MCP tools.** Use `tool_search` to expose SellerSprite tools when not already callable. Use SIF tools only as supplemental market/traffic validation.
+3. **Collect raw data.** Save or summarize enough raw MCP output to reconstruct the conclusion. Use the data path in `references/data-path-and-mcp.md`.
+4. **Clean the market sample.** Filter unrelated ASINs, replacement parts, single-color items, bundles, and non-core products before calculating price bands or brand share. Always state sample size and exclusions.
+5. **Analyze with explicit dimensions.** Cover market capacity, trend, keyword demand, TOP ASINs, competition degree, price band, brand share, product schemes, review risks, traffic structure, high-end entry, and business targets. Use `references/analysis-model.md`.
+6. **Build the PPTX.** Use the page structure and visual style in `references/pptx-style-and-visuals.md`. Keep chart data visible and tables dense but readable.
+7. **Export and verify.** For OOXML/zip-based PPTX generation, package entries with forward slashes and validate slide count/XML. Use `scripts/validate-pptx.ps1` when available.
+
+## ASIN Sampling Rule
+
+Use this as the default market competitor sampling rule unless the user specifies a different scope:
+
+- Small categories: collect TOP50 and fully filter the sample.
+- Medium categories: collect TOP100 across 2 pages, then filter.
+- Large or highly competitive categories: collect TOP150-200, then use stratified sampling by price band and brand.
+- Deep competitor analysis: choose 2-3 ASINs from each meaningful price band/core brand, typically 12-20 ASINs total.
+
+Always report `raw_count`, `effective_count`, and the deep-analysis ASIN count separately.
+
+## Required Data Artifacts
+
+For non-trivial reports, create a project folder in the workspace:
+
+```text
+{brand}_{category}_market_report/
+  data/
+    01_keyword_trends.json
+    02_top_asins.json
+    03_asin_details.json
+    04_reviews.json
+    05_traffic_stats.json
+  analysis/
+    data_notes.md
+    calculation_notes.md
+  output/
+    report.pptx
+```
+
+If the user only wants the PPTX, still keep enough notes in the script or `analysis/` folder to audit the logic later.
+
+## Evidence Rules
+
+- Distinguish observation from conclusion. MCP data is raw observation; the report's conclusion must explain the mechanism.
+- Brand share should default to brand-level sales units or sales amount aggregated from effective ASINs. Use ASIN-count share only as a fallback when sales data is unavailable, and label it as "按相关 ASIN 数粗略估算".
+- Never calculate competition from unfiltered TOP50 if the keyword returns accessories, generic lights, truck-bed strips, or non-automotive products.
+- For premium brands, explicitly compare against high-end competitors, not only low-price sellers.
+- Every chart must have a stated data口径: keyword/month, filtered sample, brand sales units, brand sales amount, ASIN count fallback, review sample, or sales trend.
+
+## References
+
+- Data path and MCP calls: `references/data-path-and-mcp.md`
+- Analysis logic and decision rules: `references/analysis-model.md`
+- PPTX structure, style, and visualization: `references/pptx-style-and-visuals.md`

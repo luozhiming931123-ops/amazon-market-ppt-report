@@ -1,0 +1,12 @@
+interface:
+  display_name: "Amazon Market PPT Report"
+  short_description: "Amazon市场分析PPTX工作流"
+  brand_color: "#722F37"
+  default_prompt: "Use $amazon-market-ppt-report to build a SellerSprite-backed Amazon US category analysis PPTX."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "sellersprite-mcp"
+      description: "SellerSprite Amazon keyword, ASIN, traffic, review, and sales data"
+policy:
+  allow_implicit_invocation: true
