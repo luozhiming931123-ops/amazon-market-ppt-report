@@ -12,7 +12,7 @@ This skill standardizes the full workflow for Amazon category analysis reports:
 - premium brand entry logic and annual business target planning
 - PPTX page structure, visual style, chart口径, export, and verification
 
-It was created for reports such as `RGB rock light`, `LED pod light`, `switch panel`, and `LED headlight bulb`, but the workflow can be reused for other Amazon US categories.
+It was created for reports such as `LED light`, `dome light`, `switch`, and `LED bulb`, but the workflow can be reused for other Amazon US categories.
 
 ## Skill Structure
 
