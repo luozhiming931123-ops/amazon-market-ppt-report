@@ -1,12 +1,15 @@
 interface:
   display_name: "Amazon Market PPT Report"
-  short_description: "Amazon市场分析PPTX工作流"
+  short_description: "SellerSprite/SIF 数据驱动的 Amazon 市场分析与新品开发 PPTX"
   brand_color: "#722F37"
-  default_prompt: "Use $amazon-market-ppt-report to build a SellerSprite-backed Amazon US category analysis PPTX."
+  default_prompt: "Use $amazon-market-ppt-report to build a visualization-heavy SellerSprite-backed Amazon category analysis PPTX with category adapters, MCP traceability, and depth audit."
 dependencies:
   tools:
     - type: "mcp"
       value: "sellersprite-mcp"
       description: "SellerSprite Amazon keyword, ASIN, traffic, review, and sales data"
+    - type: "mcp"
+      value: "sif-mcp"
+      description: "Optional Amazon keyword and traffic validation"
 policy:
   allow_implicit_invocation: true

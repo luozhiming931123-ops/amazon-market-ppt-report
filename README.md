@@ -4,15 +4,15 @@ Reusable Codex skill for creating data-backed Amazon marketplace analysis PPTX r
 
 ## What It Does
 
-This skill standardizes the full workflow for Amazon category analysis reports:
+This skill standardizes a generic workflow for Amazon marketplace reports:
 
 - MCP data path for SellerSprite and optional SIF validation
-- ASIN sampling rules for small, medium, and high-competition categories
-- market capacity, keyword trend, TOP ASIN, price band, brand sales share, review risk, and traffic structure analysis
-- premium brand entry logic and annual business target planning
-- PPTX page structure, visual style, chart口径, export, and verification
+- keyword demand, trend, TOP ASIN, price band, brand share, review risk, and traffic structure analysis
+- `asin_prediction`-first monthly units/GMV handling with BSR fallback rules
+- visualization-first PPTX structure and chart/table/matrix requirements
+- report depth audit, PPTX XML validation, and evidence coverage checks
 
-It was created for reports such as `LED light`, `Dome light`, `switch`, and `LED bulb`, but the workflow can be reused for other Amazon US categories.
+This public version intentionally excludes client-specific products, categories, ASINs, datasets, and category adapters. Keep those in private/local installs only.
 
 ## Skill Structure
 
@@ -24,8 +24,12 @@ amazon-market-ppt-report/
   references/
     analysis-model.md
     data-path-and-mcp.md
+    mcp-call-playbook.md
     pptx-style-and-visuals.md
+    report-depth-rubric.md
+    visualization-and-output-contract.md
   scripts/
+    audit-pptx-depth.ps1
     validate-pptx.ps1
 ```
 
@@ -49,25 +53,33 @@ ASIN sampling:
 
 - Small categories: TOP50, fully filtered
 - Medium categories: TOP100 across 2 pages
-- Large/high-competition categories: TOP150-200, then stratified sampling by price band and brand
-- Deep competitor analysis: 12-20 ASINs, normally 2-3 per price band/core brand
+- Large/high-competition categories: TOP150-200, then stratified sampling by price band, brand, and product scheme
+- Deep competitor analysis: 12-20 ASINs, normally 2-3 per price band/core brand/product scheme
 
-Brand share:
+Sales and brand share:
 
+- For SellerSprite, call `asin_prediction` for deep ASINs before using BSR fallback
+- Parse `monthItemList.sales` and `monthItemList.amount` for monthly units/GMV
 - Prefer brand sales amount share when sales coverage is >=70%
 - Use brand unit share when sales amount is missing but unit coverage is >=70%
-- Use ASIN-count share only as a fallback, clearly labeled as rough estimation
+- Use BSR proxy or ASIN-count share only as a labeled fallback
 
 ## Verify PPTX Output
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-pptx.ps1 `
   -PptxPath .\report.pptx `
-  -ExpectedSlides 15 `
-  -RequiredText "竞争度拆解","价格带分布","品牌份额"
+  -ExpectedSlides 22 `
+  -RequiredText "price band","brand share","asin_prediction"
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\audit-pptx-depth.ps1 `
+  -PptxPath .\report.pptx `
+  -Tier CompetitiveEnhanced `
+  -RequiredText "price,ASIN,BSR,traffic,review,asin_prediction"
 ```
 
 ## License
 
 MIT
-
