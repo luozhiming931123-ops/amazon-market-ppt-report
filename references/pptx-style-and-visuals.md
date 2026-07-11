@@ -48,6 +48,8 @@ Use 18-26 slides by default:
 20. Execution roadmap and risks
 21+. Appendix/data tables if needed
 
+Before generating the PPTX, map this structure into `output/visual-manifest.json` and validate it with `scripts/validate-visual-manifest.ps1 -Tier CompetitiveEnhanced`.
+
 ## Deep Product Report Additions
 
 For 28-40 slide reports, add:
@@ -61,6 +63,8 @@ For 28-40 slide reports, add:
 - packaging and instruction-card requirements
 - compliance/regulatory risk page when relevant
 - inventory and launch milestone plan
+
+Deep Product Reports must validate with `scripts/validate-visual-manifest.ps1 -Tier DeepProductReport`, including all 13 core visuals and at least 3 support/deep visuals.
 
 ## Page-Level Rules
 
@@ -76,6 +80,7 @@ For 28-40 slide reports, add:
 Preferred output names:
 
 ```text
+{brand}_{category}_Amazon_US_visual-manifest_{YYYYMMDD}.json
 {brand}_{category}_Amazon_US_市场分析报告_{YYYYMMDD}.pptx
 {brand}_{category}_Amazon_US_市场分析报告_竞争格局增强版.pptx
 {brand}_{category}_Amazon_US_新品开发深度报告_{YYYYMMDD}.pptx
@@ -93,6 +98,7 @@ If generating PPTX through OOXML:
 Before final response:
 
 - PPTX exists and is non-empty
+- visual manifest exists and passes the matching tier validation
 - expected slide count exists
 - each `ppt/slides/slide*.xml` parses as XML
 - zip entries use forward slashes

@@ -14,7 +14,7 @@ Use this rubric before claiming a report is complete.
 | ASIN sales prediction coverage | check target/core ASINs | 70%+ deep sample if using brand share | 70%+ effective deep sample if using brand share |
 | Low-star review ASINs | 1-2 | 2-4 | 4-8 |
 | Product attributes compared | 5+ | 8+ | 12+ |
-| Visual components | 6+ | 10+ | 16+ |
+| Visual components | 6+ | 13 core visuals | 13 core + 3 support/deep visuals |
 
 ## Conclusion Quality Gate
 
@@ -34,6 +34,8 @@ Good: "A premium competitor sustains a higher ASP with high review depth and cle
 A report fails this skill if any of the following are true:
 
 - It has many pages but fewer than the required visual components.
+- It lacks `visual-manifest.json` for a Competitive Enhanced or Deep Product Report.
+- `visual-manifest.json` fails the matching tier check in `validate-visual-manifest.ps1`.
 - It lacks raw_count, effective_count, and deep_sample_count.
 - It calculates brand share from unfiltered ASINs.
 - It presents ASIN-count fallback as market share.

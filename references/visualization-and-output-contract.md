@@ -20,7 +20,21 @@ Enhanced reports must be visual-first. A slide deck that is mostly text cards fa
 | Annual target chart | Quarterly units/revenue/review milestones | Yes |
 | Execution roadmap | Product, content, ad, operations, risks by quarter | Yes |
 
-Competitive Enhanced reports require at least 10 visual components. Deep Product Reports require at least 16.
+Competitive Enhanced reports require all 13 core visual types above. Deep Product Reports require all 13 core visual types plus at least 3 support/deep visual types from `visual-manifest-spec.md`.
+
+## Visual Manifest Requirement
+
+For Competitive Enhanced and Deep Product Report outputs, create `output/visual-manifest.json` before generating the final PPTX. The manifest is the machine-checkable contract for visual coverage.
+
+Required workflow:
+
+1. Draft the manifest from `references/visual-manifest-spec.md`.
+2. Use `examples/competitive-enhanced.visuals.json` or `examples/deep-product-report.visuals.json` as the generic layout pattern.
+3. Replace placeholder data with MCP-backed observations, filtered sample sizes, metrics, fallback labels, conclusions, and actions.
+4. Run `scripts/validate-visual-manifest.ps1` with the matching tier.
+5. Generate or revise the PPTX so every important visual in the manifest appears in the deck.
+
+Do not deliver a report that passes the text depth audit but fails the visual manifest check.
 
 ## Visual Rules
 
@@ -35,9 +49,9 @@ Competitive Enhanced reports require at least 10 visual components. Deep Product
 
 | Tier | Slides | Minimum Visuals | Maximum Pure Text Slides |
 | --- | ---: | ---: | ---: |
-| Quick Brief | 10-14 | 6 | 3 |
-| Competitive Enhanced | 18-26 | 10 | 5 |
-| Deep Product Report | 28-40 | 16 | 8 |
+| Quick Brief | 10-14 | 6 core visuals | 3 |
+| Competitive Enhanced | 18-26 | 13 core visuals | 5 |
+| Deep Product Report | 28-40 | 13 core + 3 support/deep visuals | 8 |
 
 ## PPTX Generation Guardrails
 
@@ -45,3 +59,4 @@ Competitive Enhanced reports require at least 10 visual components. Deep Product
 - Keep chart/table data visible in the slide XML, not only as an image.
 - If using OOXML, package zip entries with forward slashes.
 - Validate required terms: `$`, `%`, ASIN, BSR, review, traffic, capacity/size/category-specific terms.
+- Validate the visual manifest with `validate-visual-manifest.ps1` before claiming the report is complete.

@@ -1,0 +1,224 @@
+{
+  "version": "1.0",
+  "tier": "DeepProductReport",
+  "report_context": {
+    "marketplace": "US",
+    "category_label": "generic category",
+    "target_brand_label": "target brand"
+  },
+  "slides": [
+    { "slide": 1, "title": "Cover", "visual_type": "cover" },
+    { "slide": 2, "title": "Executive conclusion", "visual_type": "one_page_conclusion" },
+    { "slide": 3, "title": "Data scope", "visual_type": "data_scope" },
+    {
+      "slide": 4,
+      "title": "Keyword capacity",
+      "visual_type": "keyword_capacity_bar",
+      "chart_kind": "bar",
+      "data_source": "SellerSprite keyword_research_trends",
+      "data_basis": "latest month keyword demand",
+      "required_fields": ["keyword", "search_volume", "purchase_rate"],
+      "fallback_label": null,
+      "business_implication": "Demand scale defines whether the category deserves full product development effort."
+    },
+    {
+      "slide": 5,
+      "title": "Keyword trend",
+      "visual_type": "keyword_trend",
+      "chart_kind": "line_or_table",
+      "data_source": "SellerSprite aba_research_trend",
+      "data_basis": "24+ month keyword trend if available",
+      "required_fields": ["keyword", "period", "search_volume", "purchase_rate"],
+      "fallback_label": null,
+      "business_implication": "Seasonality shapes launch timing, ad budget, and inventory."
+    },
+    {
+      "slide": 6,
+      "title": "Keyword family detail",
+      "visual_type": "keyword_family_detail",
+      "chart_kind": "table",
+      "data_source": "SellerSprite keyword tools",
+      "data_basis": "segmented keyword families",
+      "required_fields": ["keyword", "intent", "search_volume", "purchase_rate", "action"],
+      "fallback_label": null,
+      "business_implication": "Families separate product jobs that should not share one message."
+    },
+    {
+      "slide": 7,
+      "title": "Keyword opportunity matrix",
+      "visual_type": "keyword_opportunity_matrix",
+      "chart_kind": "matrix",
+      "data_source": "SellerSprite keyword tools",
+      "data_basis": "demand, conversion, competition, and PPC role",
+      "required_fields": ["keyword", "demand", "competition", "action"],
+      "fallback_label": null,
+      "business_implication": "Keyword actions must split launch SEO, PPC, and content."
+    },
+    {
+      "slide": 8,
+      "title": "TOP ASIN competitor matrix",
+      "visual_type": "top_asin_competitor_matrix",
+      "chart_kind": "table",
+      "data_source": "SellerSprite traffic_source + asin_detail",
+      "data_basis": "filtered effective ASIN sample",
+      "required_fields": ["asin", "brand", "price", "rating", "reviews", "bsr", "product_scheme"],
+      "fallback_label": null,
+      "business_implication": "Top listings reveal trust barriers and minimum proof requirements."
+    },
+    {
+      "slide": 9,
+      "title": "Competitor group detail",
+      "visual_type": "competitor_group_detail",
+      "chart_kind": "matrix",
+      "data_source": "SellerSprite asin_detail + asin_prediction",
+      "data_basis": "stratified deep ASIN sample",
+      "required_fields": ["asin", "brand", "price", "sales_units", "sales_amount", "product_scheme"],
+      "fallback_label": null,
+      "business_implication": "Competitor groups show whether the target brand should enter as value, premium, or specialist."
+    },
+    {
+      "slide": 10,
+      "title": "Price-band distribution",
+      "visual_type": "price_band_distribution",
+      "chart_kind": "bar",
+      "data_source": "SellerSprite asin_detail",
+      "data_basis": "filtered ASIN prices",
+      "required_fields": ["price", "price_band", "asin_count"],
+      "fallback_label": null,
+      "business_implication": "Price crowding identifies margin risk."
+    },
+    {
+      "slide": 11,
+      "title": "Brand share",
+      "visual_type": "brand_share_chart",
+      "chart_kind": "bar_or_donut",
+      "data_source": "SellerSprite asin_prediction",
+      "data_basis": "monthly sales amount by normalized brand",
+      "required_fields": ["brand", "sales_amount", "sales_units", "coverage_rate"],
+      "fallback_label": null,
+      "business_implication": "Share concentration determines how sharp differentiation must be."
+    },
+    {
+      "slide": 12,
+      "title": "Traffic mix",
+      "visual_type": "traffic_mix_stacked_bars",
+      "chart_kind": "stacked_bar",
+      "data_source": "SellerSprite traffic_source",
+      "data_basis": "ASIN traffic source keyword counts",
+      "required_fields": ["asin", "natural_keywords", "ad_keywords", "video_keywords", "brand_keywords"],
+      "fallback_label": null,
+      "business_implication": "Traffic mix estimates launch CAC pressure."
+    },
+    {
+      "slide": 13,
+      "title": "Product scheme matrix",
+      "visual_type": "product_scheme_matrix",
+      "chart_kind": "matrix",
+      "data_source": "SellerSprite asin_detail",
+      "data_basis": "deep ASIN attribute extraction",
+      "required_fields": ["asin", "product_scheme", "core_attributes", "package_format", "value_metric"],
+      "fallback_label": null,
+      "business_implication": "Scheme repetition reveals where true differentiation is needed."
+    },
+    {
+      "slide": 14,
+      "title": "Product teardown",
+      "visual_type": "product_teardown",
+      "chart_kind": "matrix",
+      "data_source": "SellerSprite asin_detail + listing audit",
+      "data_basis": "feature, package, use case, and proof asset extraction",
+      "required_fields": ["asin", "core_attributes", "package_format", "proof_asset", "limitation"],
+      "fallback_label": null,
+      "business_implication": "Teardown converts competitor observations into R&D requirements."
+    },
+    {
+      "slide": 15,
+      "title": "Review risk cluster",
+      "visual_type": "review_risk_cluster",
+      "chart_kind": "cluster_matrix",
+      "data_source": "SellerSprite review",
+      "data_basis": "1-3 star review sample",
+      "required_fields": ["review_signal", "root_cause", "opportunity", "proof_required"],
+      "fallback_label": null,
+      "business_implication": "Review risks define the minimum viable quality bar."
+    },
+    {
+      "slide": 16,
+      "title": "Listing proof audit",
+      "visual_type": "listing_proof_audit",
+      "chart_kind": "matrix",
+      "data_source": "SellerSprite asin_detail + listing observation",
+      "data_basis": "main image, A+, video, badges, proof assets",
+      "required_fields": ["asin", "proof_asset", "message", "gap", "action"],
+      "fallback_label": null,
+      "business_implication": "Conversion proof must be visible before scaling ads."
+    },
+    {
+      "slide": 17,
+      "title": "Price-product positioning map",
+      "visual_type": "price_product_positioning_map",
+      "chart_kind": "scatter_or_quadrant",
+      "data_source": "SellerSprite asin_detail + asin_prediction",
+      "data_basis": "price, sales, rating, and scheme",
+      "required_fields": ["price", "product_scheme", "positioning", "rating", "reviews"],
+      "fallback_label": null,
+      "business_implication": "Positioning should be based on proof and willingness to pay."
+    },
+    {
+      "slide": 18,
+      "title": "Compliance risk",
+      "visual_type": "compliance_risk",
+      "chart_kind": "risk_matrix",
+      "data_source": "listing claims and category requirements",
+      "data_basis": "claims, warnings, use limitations, platform policy risk",
+      "required_fields": ["claim", "risk_level", "requirement", "mitigation"],
+      "fallback_label": null,
+      "business_implication": "Compliance risks should be resolved before final packaging and claims."
+    },
+    {
+      "slide": 19,
+      "title": "SKU ladder",
+      "visual_type": "sku_ladder",
+      "chart_kind": "ladder",
+      "data_source": "analysis model",
+      "data_basis": "price bands, product schemes, and user jobs",
+      "required_fields": ["sku_role", "price", "target_user", "bundle_or_refill"],
+      "fallback_label": null,
+      "business_implication": "The SKU ladder separates acquisition, margin, and repeat-purchase roles."
+    },
+    {
+      "slide": 20,
+      "title": "Annual target",
+      "visual_type": "annual_target_chart",
+      "chart_kind": "bar_or_table",
+      "data_source": "asin_prediction + target model",
+      "data_basis": "ASP, units, quarterly ramp, and review milestones",
+      "required_fields": ["quarter", "units", "asp", "revenue", "review_milestone"],
+      "fallback_label": null,
+      "business_implication": "Targets must be grounded in unit ramp and review acquisition."
+    },
+    {
+      "slide": 21,
+      "title": "Inventory launch plan",
+      "visual_type": "inventory_launch_plan",
+      "chart_kind": "roadmap",
+      "data_source": "target model",
+      "data_basis": "quarterly unit ramp and lead time",
+      "required_fields": ["quarter", "units", "inventory", "milestone", "risk"],
+      "fallback_label": null,
+      "business_implication": "Inventory planning prevents launch success from turning into stockout risk."
+    },
+    {
+      "slide": 22,
+      "title": "Execution roadmap",
+      "visual_type": "execution_roadmap",
+      "chart_kind": "roadmap",
+      "data_source": "analysis model",
+      "data_basis": "product, content, ads, operations, and risks by quarter",
+      "required_fields": ["quarter", "workstream", "milestone", "risk"],
+      "fallback_label": null,
+      "business_implication": "The roadmap turns the report into an execution plan."
+    },
+    { "slide": 23, "title": "Appendix", "visual_type": "appendix_data_table" }
+  ]
+}

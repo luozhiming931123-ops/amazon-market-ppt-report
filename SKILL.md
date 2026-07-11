@@ -32,8 +32,9 @@ Do not use for quick one-paragraph market opinions without data collection.
 5. **Collect raw data.** Save or summarize enough raw MCP output to reconstruct conclusions. Record tool name, inputs, month/period, raw count, filtered count, and missing fields.
 6. **Clean the market sample.** Filter unrelated products before calculating price bands, brand share, product schemes, or review risks. Always state sample size and exclusions.
 7. **Analyze with explicit mechanisms.** Every core conclusion must follow: `data observation -> mechanism -> implication for target brand -> product/operation action`.
-8. **Build a visualization-first PPTX.** Use `references/visualization-and-output-contract.md` and `references/pptx-style-and-visuals.md`. Pure text pages must stay below 20% of total slides.
-9. **Run depth and PPTX verification.** Use `scripts/validate-pptx.ps1` and `scripts/audit-pptx-depth.ps1` when available. Fix missing required visuals, prices, ASIN evidence, or category-specific terms before final delivery.
+8. **Plan visuals before writing slides.** Create a `visual-manifest.json` from `references/visual-manifest-spec.md`. Use `examples/competitive-enhanced.visuals.json` or `examples/deep-product-report.visuals.json` as the schema-level pattern, replacing placeholder data with MCP-backed evidence.
+9. **Build a visualization-first PPTX.** Use `references/visualization-and-output-contract.md` and `references/pptx-style-and-visuals.md`. Pure text pages must stay below 20% of total slides.
+10. **Run visual, depth, and PPTX verification.** Use `scripts/validate-visual-manifest.ps1`, `scripts/validate-pptx.ps1`, and `scripts/audit-pptx-depth.ps1` when available. Fix missing required visuals, prices, ASIN evidence, or category-specific terms before final delivery.
 
 ## Report Depth Tiers
 
@@ -71,10 +72,13 @@ For non-trivial reports, create a project folder in the workspace:
     data_notes.md
     calculation_notes.md
   output/
+    visual-manifest.json
     report.pptx
 ```
 
 If the user only wants the PPTX, still keep enough notes in the script or `analysis/` folder to audit the logic later.
+
+`visual-manifest.json` is mandatory for Competitive Enhanced and Deep Product Report outputs. It must list every slide, visual type, data source, metric fields, and conclusion/action text. It is the contract between the analysis and the PPTX: if a required chart appears in the narrative but is missing from the manifest, the report is incomplete.
 
 ## Evidence Rules
 
@@ -95,7 +99,20 @@ Read only the files needed for the task, but for a PPTX report always read:
 - Data path and artifacts: `references/data-path-and-mcp.md`
 - Analysis logic: `references/analysis-model.md`
 - Visualization contract: `references/visualization-and-output-contract.md`
+- Visual manifest spec: `references/visual-manifest-spec.md`
 - Depth rubric: `references/report-depth-rubric.md`
 - PPTX style: `references/pptx-style-and-visuals.md`
 
 Category-specific adapters may be kept privately in local installs, but this public version intentionally contains only the generic workflow.
+
+## Output Verification Commands
+
+For Competitive Enhanced reports, run the visual manifest check before PPTX checks:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-visual-manifest.ps1 `
+  -ManifestPath .\output\visual-manifest.json `
+  -Tier CompetitiveEnhanced
+```
+
+For Deep Product Reports, use `-Tier DeepProductReport`. The PPTX can be delivered only after the manifest, XML, and depth audit checks pass or after any remaining warnings are explicitly disclosed.

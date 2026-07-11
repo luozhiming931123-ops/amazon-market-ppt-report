@@ -10,6 +10,7 @@ This skill standardizes a generic workflow for Amazon marketplace reports:
 - keyword demand, trend, TOP ASIN, price band, brand share, review risk, and traffic structure analysis
 - `asin_prediction`-first monthly units/GMV handling with BSR fallback rules
 - visualization-first PPTX structure and chart/table/matrix requirements
+- visual manifest examples and validation for chart/table/matrix coverage
 - report depth audit, PPTX XML validation, and evidence coverage checks
 
 This public version intentionally excludes client-specific products, categories, ASINs, datasets, and category adapters. Keep those in private/local installs only.
@@ -27,9 +28,14 @@ amazon-market-ppt-report/
     mcp-call-playbook.md
     pptx-style-and-visuals.md
     report-depth-rubric.md
+    visual-manifest-spec.md
     visualization-and-output-contract.md
+  examples/
+    competitive-enhanced.visuals.json
+    deep-product-report.visuals.json
   scripts/
     audit-pptx-depth.ps1
+    validate-visual-manifest.ps1
     validate-pptx.ps1
 ```
 
@@ -63,6 +69,27 @@ Sales and brand share:
 - Prefer brand sales amount share when sales coverage is >=70%
 - Use brand unit share when sales amount is missing but unit coverage is >=70%
 - Use BSR proxy or ASIN-count share only as a labeled fallback
+
+Visual output:
+
+- Competitive Enhanced reports must include all 13 core visual types in `references/visual-manifest-spec.md`
+- Deep Product Reports must include all 13 core visual types plus at least 3 support/deep visual types
+- Every slide in the PPTX should map to a `visual-manifest.json` entry with data source, metrics, evidence basis, and action
+- Use `examples/competitive-enhanced.visuals.json` and `examples/deep-product-report.visuals.json` as generic templates
+
+## Verify Visual Manifest
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-visual-manifest.ps1 `
+  -ManifestPath .\examples\competitive-enhanced.visuals.json `
+  -Tier CompetitiveEnhanced
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-visual-manifest.ps1 `
+  -ManifestPath .\examples\deep-product-report.visuals.json `
+  -Tier DeepProductReport
+```
 
 ## Verify PPTX Output
 
