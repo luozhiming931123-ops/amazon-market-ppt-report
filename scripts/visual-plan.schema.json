@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Amazon market PPT evidence visual plan",
+  "type": "object",
+  "required": ["tier", "required_roles", "visuals"],
+  "properties": {
+    "tier": { "enum": ["Quick Brief", "Competitive Enhanced", "Deep Product Report"] },
+    "required_roles": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "visuals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slide", "role", "type", "source", "fields", "period", "sample", "data_points"],
+        "properties": {
+          "slide": { "type": "integer", "minimum": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "type": { "enum": ["bar", "line", "stacked_bar", "scatter", "heatmap", "matrix", "funnel", "timeline", "table"] },
+          "source": { "type": "string", "pattern": "^(data|analysis)/" },
+          "fields": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "period": { "type": "string", "minLength": 1 },
+          "sample": { "type": "string", "minLength": 1 },
+          "data_points": { "type": "integer", "minimum": 1 },
+          "rows": { "type": "integer", "minimum": 1 },
+          "columns": { "type": "integer", "minimum": 1 },
+          "metrics": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

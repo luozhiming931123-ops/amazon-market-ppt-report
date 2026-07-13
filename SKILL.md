@@ -33,8 +33,10 @@ Do not use for quick one-paragraph market opinions without data collection.
 3. **Collect raw data.** Save or summarize enough raw MCP output to reconstruct the conclusion. Use the data path in `references/data-path-and-mcp.md`.
 4. **Clean the market sample.** Filter unrelated ASINs, replacement parts, single-color items, bundles, and non-core products before calculating price bands or brand share. Always state sample size and exclusions.
 5. **Analyze with explicit dimensions.** Cover market capacity, trend, keyword demand, TOP ASINs, competition degree, price band, brand share, product schemes, review risks, traffic structure, high-end entry, and business targets. Use `references/analysis-model.md`.
-6. **Build the PPTX.** Use the page structure and visual style in `references/pptx-style-and-visuals.md`. Keep chart data visible and tables dense but readable.
-7. **Export and verify.** For OOXML/zip-based PPTX generation, package entries with forward slashes and validate slide count/XML. Use `scripts/validate-pptx.ps1` when available.
+6. **Plan evidence visuals before layout.** Create `analysis/visual_plan.json` following `scripts/visual-plan.schema.json`. Every evidence visual must declare slide, role, type, source file, source fields, period, sample, and data points. Read `references/visualization-and-output-contract.md` before building.
+7. **Build the PPTX with evidence primitives.** Use `scripts/pptx_visual_primitives.js` or an equivalent renderer that preserves its `[VISUAL ...]` metadata in each chart/matrix shape's `p:cNvPr name` or `descr`. Cards, icons, and a 2-4 row summary table do not count as evidence visuals.
+8. **Translate without visual regression.** When localizing a deck, replace labels and narrative only. Preserve the chart type, data series, scale, visual role, source metadata, and page-level comparison. Do not replace a chart with cards or a short table.
+9. **Export and verify.** For OOXML/zip-based PPTX generation, package entries with forward slashes and validate slide count/XML. Run `scripts/validate-pptx.ps1`, `scripts/audit-pptx-visuals.ps1`, and `scripts/render-pptx-preview.ps1` when available. Inspect the rendered key pages before delivery.
 
 ## ASIN Sampling Rule
 
@@ -62,6 +64,7 @@ For non-trivial reports, create a project folder in the workspace:
   analysis/
     data_notes.md
     calculation_notes.md
+    visual_plan.json
   output/
     report.pptx
 ```
@@ -75,9 +78,17 @@ If the user only wants the PPTX, still keep enough notes in the script or `analy
 - Never calculate competition from unfiltered TOP50 if the keyword returns accessories, generic lights, truck-bed strips, or non-automotive products.
 - For premium brands, explicitly compare against high-end competitors, not only low-price sellers.
 - Every chart must have a stated data口径: keyword/month, filtered sample, brand sales units, brand sales amount, ASIN count fallback, review sample, or sales trend.
+- A table counts as an evidence visual only when it compares 6+ rows and 3+ numeric metrics. Summary cards, decorative shapes, and topic words are never counted as visuals.
+- Competitive Enhanced reports must contain at least 12 distinct visual roles and evidence visuals on at least 60% of slides. Deep Product Reports require at least 16 roles.
+- Do not claim visual completion from XML validity, keyword hits, or the number of PowerPoint shapes. The visual audit must match `visual_plan.json` against chart metadata embedded in the PPTX.
 
 ## References
 
 - Data path and MCP calls: `references/data-path-and-mcp.md`
 - Analysis logic and decision rules: `references/analysis-model.md`
 - PPTX structure, style, and visualization: `references/pptx-style-and-visuals.md`
+- Visual contract and role library: `references/visualization-and-output-contract.md`
+- Visual-plan schema: `scripts/visual-plan.schema.json`
+- Reusable evidence components: `scripts/pptx_visual_primitives.js`
+- Visual audit: `scripts/audit-pptx-visuals.ps1`
+- Rendered preview: `scripts/render-pptx-preview.ps1`

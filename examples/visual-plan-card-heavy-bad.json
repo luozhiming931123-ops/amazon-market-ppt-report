@@ -1,0 +1,17 @@
+{
+  "tier": "Competitive Enhanced",
+  "required_roles": ["price_band"],
+  "visuals": [
+    {
+      "slide": 8,
+      "role": "price_band",
+      "type": "cards",
+      "source": "data/02_market_sample.json",
+      "fields": ["price_band"],
+      "period": "2026-06",
+      "sample": "57 effective ASINs",
+      "data_points": 3
+    }
+  ],
+  "why_rejected": "Cards with price conclusions are not a price-band distribution. This plan lacks the required role coverage, uses an unsupported type, and cannot pass the visual audit."
+}

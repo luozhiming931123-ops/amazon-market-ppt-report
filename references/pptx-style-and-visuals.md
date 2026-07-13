@@ -88,3 +88,5 @@ Before final response:
 - zip entries use forward slashes
 - key requested terms appear in slide XML
 - final answer states any data口径 limitations
+- `analysis/visual_plan.json` matches the evidence metadata embedded in the deck; run `scripts/audit-pptx-visuals.ps1`
+- render the key pages to PNG and inspect visual hierarchy, clipping, labels, and chart comparability; see `references/visualization-and-output-contract.md`
