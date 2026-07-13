@@ -1,5 +1,38 @@
 # Analysis Model
 
+## Functional / Semi-Standard Product Decision Model
+
+Use this model before applying a category-specific lens. A professional report must connect five layers:
+
+```text
+buyer job and compatibility boundary
+-> multi-keyword observed sample
+-> normalized price and product-value comparison
+-> product / content / SKU decision
+-> launch scenario and validation gates
+```
+
+For each core conclusion, state `observation -> mechanism -> implication -> action -> scope limit`.
+
+| Decision | Required evidence | Do not overclaim |
+| --- | --- | --- |
+| Entry | demand trend, effective sample, price/value opening, competitive barrier | observed sample is not total market size |
+| Positioning | normalized price, configuration, functional proof, high-end alternatives | Listing claim is not verified performance |
+| Product/SKU | compatibility, installation, review failures, service evidence | market data cannot certify fitment/compliance |
+| Launch | keyword intent, traffic mix, content proof, seasonality | unit/GMV scenario is not a profit model |
+
+### Normalized price and value
+
+Set the denominator from the buyer's functional unit before calculating price bands. Use price per installed set, compatible platform, capacity/output step, length, count, or coverage as appropriate. Separate bundle value from core product price. Never average incomparable configurations into a single ASP.
+
+### Product value versus feature count
+
+Score or compare only decision-relevant dimensions: functional performance, compatibility, configuration, installation, reliability, and service. Feature count alone is not value. A premium position is credible only when the Listing, product configuration, reviews, and support evidence consistently reduce a buyer risk that cheaper offers leave unresolved.
+
+### Validation gates
+
+Place unverified claims in a named gate, not in the conclusion. Typical gates include product test, compatibility/fitment check, regulatory/compliance check, landed-cost/FBA/PPC model, and warranty/return-rate validation.
+
 ## Market Capacity
 
 Analyze at three levels:

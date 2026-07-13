@@ -2,7 +2,7 @@
 
 ## Required workflow
 
-Create `analysis/visual_plan.json` before building slides. Use `examples/visual-plan-led-whip-good.json` as the model and validate the completed deck with:
+Create `analysis/visual_plan.json` before building slides. Use `examples/functional-semistandard-visual-plan.json` as the generic model; use the LED whip-light example only as a category instance. Validate the completed deck with:
 
 ```powershell
 ./scripts/validate-pptx.ps1 -PptxPath output/report.pptx
@@ -16,14 +16,14 @@ Use `-AllowShortTrend` only when fewer than 12 months exist and label the limite
 
 - Use `[VISUAL role=...;type=...;source=...;sample=...;period=...;points=...]` in `p:cNvPr name` or `descr` for every evidence visual.
 - State the date/month, sample, source file, and calculation scope in or beside the chart.
-- Keep one decision question per slide. Put the implication beside the visual in no more than two lines.
+- Declare `decision_question`, `implication`, and `scope_limit` in the visual plan. Keep one decision question per slide and put the implication beside the visual in no more than two lines.
 - Preserve evidence visual type and data series when translating a deck. Chinese labels must not convert a chart into a card layout.
 - Count only these as evidence visuals: bar, line, stacked bar, scatter, heatmap, matrix, funnel, timeline, or a table with 6+ rows and 3+ numeric metrics.
 - Do not count summary cards, icons, decorative shapes, topic-keyword text, or a 2-4 row table.
 
 ## Competitive Enhanced role library
 
-Declare at least 12 distinct roles. The normal LED/automotive-lighting composition uses the following 14:
+Declare at least 12 distinct roles. Use this composition for semi-standard/function-led products; substitute category-specific roles only when they answer the same decision.
 
 | Role | Preferred visual | Decision enabled |
 | --- | --- | --- |
@@ -35,12 +35,14 @@ Declare at least 12 distinct roles. The normal LED/automotive-lighting compositi
 | `price_band` | bar | Which price bands are crowded or open? |
 | `sample_sales_concentration` | bar | How concentrated is the observed sample? |
 | `traffic_mix` | stacked bar | Is traffic organic, ad-led, or external? |
-| `product_scheme_matrix` | matrix | Which configurations are commoditized? |
+| `product_value_matrix` | matrix | Which configurations, functional proof, and service elements are commoditized? |
+| `compatibility_fitment_matrix` | matrix | Which fitment, interface, or installation boundaries create buyer risk? |
 | `review_risk_heatmap` | heatmap | Which defects need design proof? |
 | `price_product_positioning` | scatter | Where can the target brand differentiate? |
 | `sku_ladder` | matrix | How should good-better-best be structured? |
 | `annual_target` | bar | What units and GMV are required by quarter? |
 | `roadmap` | timeline | What must happen before launch and scale? |
+| `validation_gate` | table | Which claims require first-party, compliance, or profit inputs before launch? |
 
 ## Data-granularity gate
 

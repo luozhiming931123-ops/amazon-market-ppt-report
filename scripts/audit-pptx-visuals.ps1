@@ -56,8 +56,11 @@ foreach ($role in @($plan.required_roles)) {
 }
 
 foreach ($visual in @($plan.visuals)) {
-  foreach ($field in @("slide", "role", "type", "source", "fields", "period", "sample", "data_points")) {
+  foreach ($field in @("slide", "role", "type", "source", "fields", "period", "sample", "data_points", "decision_question", "implication", "scope_limit")) {
     Assert-Condition ($null -ne $visual.$field -and "$($visual.$field)".Length -gt 0) "Visual '$($visual.role)' is missing '$field'."
+  }
+  foreach ($field in @("decision_question", "implication", "scope_limit")) {
+    Assert-Condition ("$($visual.$field)".Length -ge 8) "Visual '$($visual.role)' needs a specific '$field' (8+ characters)."
   }
   Assert-Condition ($visual.source -match "^(data|analysis)/") "Visual '$($visual.role)' source must start with data/ or analysis/."
   Assert-Condition (@($visual.fields).Count -gt 0) "Visual '$($visual.role)' must declare source fields."

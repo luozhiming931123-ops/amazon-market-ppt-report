@@ -4,6 +4,7 @@ $root = Split-Path -Parent $PSScriptRoot
 $audit = Join-Path $root "scripts/audit-pptx-visuals.ps1"
 $goodPlan = Join-Path $root "examples/visual-plan-led-whip-good.json"
 $badPlan = Join-Path $root "examples/visual-plan-card-heavy-bad.json"
+$functionalPlan = Join-Path $root "examples/functional-semistandard-visual-plan.json"
 $temp = Join-Path ([System.IO.Path]::GetTempPath()) ("amazon-market-ppt-visual-audit-" + [guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path $temp | Out-Null
 
@@ -44,8 +45,17 @@ function New-FixturePptx([string]$Path, [bool]$WithVisualTags) {
 }
 
 try {
+  $functional = Get-Content -LiteralPath $functionalPlan -Raw -Encoding UTF8 | ConvertFrom-Json
+  if (@($functional.visuals | ForEach-Object { $_.role } | Sort-Object -Unique).Count -lt 12) { throw "Functional-product example must define 12 distinct visual roles." }
+  foreach ($visual in @($functional.visuals)) {
+    foreach ($field in @("decision_question", "implication", "scope_limit")) {
+      if ("$($visual.$field)".Length -lt 8) { throw "Functional-product example is missing a usable '$field'." }
+    }
+  }
+
   $good = Join-Path $temp "good.pptx"
   $bad = Join-Path $temp "bad.pptx"
+  $missingDecisionPlan = Join-Path $temp "missing-decision.json"
   New-FixturePptx $good $true
   New-FixturePptx $bad $false
 
@@ -60,7 +70,14 @@ try {
   try { & $audit -PptxPath $good -VisualPlanPath $badPlan -Tier "Competitive Enhanced" | Out-Null } catch { $badPlanRejected = $true }
   if (-not $badPlanRejected) { throw "Expected the card-heavy visual plan example to fail the visual audit." }
 
-  [pscustomobject]@{ GoodFixture = "PASS"; CardHeavyFixture = "REJECTED"; BadPlan = "REJECTED"; Result = "PASS" }
+  $incompletePlan = Get-Content -LiteralPath $goodPlan -Raw -Encoding UTF8 | ConvertFrom-Json
+  $incompletePlan.visuals[0].scope_limit = ""
+  $incompletePlan | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $missingDecisionPlan -Encoding UTF8
+  $missingDecisionRejected = $false
+  try { & $audit -PptxPath $good -VisualPlanPath $missingDecisionPlan -Tier "Competitive Enhanced" | Out-Null } catch { $missingDecisionRejected = $true }
+  if (-not $missingDecisionRejected) { throw "Expected a visual plan without a scope limit to fail the visual audit." }
+
+  [pscustomobject]@{ GoodFixture = "PASS"; CardHeavyFixture = "REJECTED"; BadPlan = "REJECTED"; MissingDecision = "REJECTED"; FunctionalExample = "PASS"; Result = "PASS" }
 } finally {
   Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue
 }

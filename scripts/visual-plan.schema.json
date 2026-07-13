@@ -11,7 +11,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["slide", "role", "type", "source", "fields", "period", "sample", "data_points"],
+        "required": ["slide", "role", "type", "source", "fields", "period", "sample", "data_points", "decision_question", "implication", "scope_limit"],
         "properties": {
           "slide": { "type": "integer", "minimum": 1 },
           "role": { "type": "string", "minLength": 1 },
@@ -21,6 +21,9 @@
           "period": { "type": "string", "minLength": 1 },
           "sample": { "type": "string", "minLength": 1 },
           "data_points": { "type": "integer", "minimum": 1 },
+          "decision_question": { "type": "string", "minLength": 8 },
+          "implication": { "type": "string", "minLength": 8 },
+          "scope_limit": { "type": "string", "minLength": 8 },
           "rows": { "type": "integer", "minimum": 1 },
           "columns": { "type": "integer", "minimum": 1 },
           "metrics": { "type": "integer", "minimum": 1 }

@@ -5,9 +5,12 @@
 Capture:
 - `marketplace`: default `US`
 - `category`: product/category name
-- `keywords`: 3-10 seed keywords, including broad, scene, attribute, and exact terms
+- `keywords`: 3-10 seed keywords, including root/product, scene/job, compatibility, attribute/value, and exact terms
 - `brand`: target brand, e.g. Auxbeam
 - `positioning`: low-price, mid-range, premium, or high-end
+- `buyer_job`: the functional outcome the buyer is hiring the product to deliver
+- `compatibility_boundary`: supported platform/model/interface/size/voltage/environment and exclusions
+- `functional_unit`: the unit used to normalize price and value, such as installed set, device, capacity, output, length, count, or coverage
 - `seed_asins`: optional known competitors or own ASINs
 - `style_reference`: optional PPTX/image path
 
@@ -41,7 +44,7 @@ Recommended call sequence:
        }
      }
      ```
-   - Use for TOP ASINs, price, reviews, keyword count, natural/ad mix hints, and first-pass competitor list.
+   - Run for each keyword layer, then union/deduplicate the ASINs. Use for TOP ASINs, price, reviews, keyword count, natural/ad mix hints, and the first-pass competitor list.
    - Sampling size:
      - small categories: `page: 1, size: 50`
      - medium categories: `page: 1-2, size: 50` for TOP100
@@ -82,12 +85,12 @@ Use only when it improves the confidence of market-level keyword judgment:
 
 ## Data Cleaning Rules
 
-For keyword output, create an effective sample:
-- Exclude unrelated products, accessories, replacement single parts, non-core bundles, non-automotive lights, and obviously wrong-category listings.
-- Flag but separate single-color products when analyzing RGB market.
+For the multi-keyword union, create an effective sample:
+- Exclude unrelated products, accessories, replacement single parts, non-core bundles, wrong-platform items, and obviously wrong-category listings.
+- Separate materially different product forms, bundles, capacities, or compatibility types before price normalization.
 - Normalize brand names (`MICTUNING C2`, `MICTUNING`, etc.) before share counts.
 - Keep variants visible but avoid letting one brand's variant spam become a false monopoly conclusion.
-- Record `raw_count`, `effective_count`, and exclusion categories.
+- Record keyword source, parent/child rule, `raw_count`, `effective_count`, and exclusion categories.
 
 ## Competitor Sampling Rules
 
@@ -112,7 +115,8 @@ For each effective ASIN, capture:
 
 ```text
 asin | brand | title | price | rating | review_count | bsr/rank | units | sales_amount
-pods_or_format | control | material | waterproof | app/rf/remote | brake_or_sync
+functional_unit | normalized_price | product_form | core_performance | configuration | compatibility
+installation | material_or_reliability | control_or_connectivity | included_accessories | warranty_or_service
 keyword_total | natural_keywords | ad_keywords | video_keywords | review_risks
 ```
 
@@ -130,3 +134,9 @@ Brand share should be based on sales, not listing count:
 4. Prefer sales amount share for PPT charts when coverage is >=70%.
 5. Use unit share if sales amount is missing but units coverage is >=70%.
 6. Use ASIN-count share only when sales coverage is unavailable; label it as a fallback, not market share.
+
+## Explicit evidence limits
+
+- Marketplace data can support observed demand, Listing claims, competitor configuration, review signals, and selected traffic/sales estimates.
+- Marketplace data alone cannot prove laboratory performance, compatibility certainty, regulatory compliance, product safety, landed margin, return rate, or warranty cost.
+- Keep such unknowns in `analysis/evidence_map.md` as validation gates; do not turn them into report conclusions.

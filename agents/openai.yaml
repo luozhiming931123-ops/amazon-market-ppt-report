@@ -2,7 +2,7 @@ interface:
   display_name: "Amazon Market PPT Report"
   short_description: "Amazon市场分析PPTX工作流"
   brand_color: "#722F37"
-  default_prompt: "Use $amazon-market-ppt-report to build a SellerSprite-backed Amazon US category analysis PPTX."
+  default_prompt: "Use $amazon-market-ppt-report to build a SellerSprite-backed Amazon US market analysis PPTX for a semi-standard or function-led product."
 dependencies:
   tools:
     - type: "mcp"
