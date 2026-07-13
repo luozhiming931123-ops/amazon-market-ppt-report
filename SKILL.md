@@ -9,6 +9,13 @@ description: Use when creating or revising Amazon marketplace analysis PPTX repo
 
 Use this skill to turn Amazon US market research into a reusable, data-backed PPTX report. The report must preserve the full chain: data path, MCP calls, cleaning/filtering, analysis logic, visualization choices, PPTX style, export, and verification.
 
+## 中文输出契约
+
+- 默认以简体中文交付全部面向用户的内容：PPT 标题与副标题、图表和表格标签、数据口径、结论、策略建议、风险提示、项目说明及最终回复。
+- 保留必要的行业或数据术语及专有名词，例如 Amazon、US、ASIN、BSR、SKU、PPC、GMV、RGB/RGBW、品牌名、产品型号和 MCP 工具名；其余内容不要整页使用英文。
+- 原始 MCP 返回数据可按原语言保存于 `data/`，但 `analysis/` 中的解释和 PPT 中的可读文本必须为中文。
+- 仅当用户明确要求英文、双语或其他语言时，才覆盖此默认规则。
+
 ## Trigger Fit
 
 Use for requests like:
